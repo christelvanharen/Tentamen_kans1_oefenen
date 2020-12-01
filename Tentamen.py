@@ -1,4 +1,6 @@
 import re
+import numpy as np
+import matplotlib.pyplot as plt
 
 def main():
     fasta = "TAIR10_pep_20101214.fa"
@@ -10,6 +12,7 @@ def main():
     data = lees_gff(gff)
     # print(data)
     info_alles = gff_headers(headers_voldaan, data)
+    grafiek(info_alles)
 
 def lees_fasta(bestand):
     try:
@@ -93,8 +96,31 @@ def gff_headers(headers_voldoen, data):
         gen_info.append(exonen)
 
         info_alles.append(gen_info)
-    print(info_alles)
+    # print(info_alles)
 
     return info_alles
+
+def grafiek(info_alles):
+    x_as = []
+    for onderdeel_lijst in info_alles:
+        # print(onderdeel_lijst[1])
+        if onderdeel_lijst[1] not in x_as:
+            # print(onderdeel_lijst[1])
+            x_as.append(onderdeel_lijst[1])
+    print(x_as)
+
+    # Make a fake dataset:
+    height = [3, 12, 5, 18, 45]
+    y_pos = np.arange(len(x_as))
+
+    # Create bars
+    plt.bar(y_pos, height)
+
+    # Create names on the x-axis
+    plt.xticks(y_pos, x_as)
+
+    # Show graphic
+    plt.show()
+
 
 main()
